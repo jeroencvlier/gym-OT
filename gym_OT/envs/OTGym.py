@@ -28,19 +28,20 @@ class OTGym_v0(gym.Env):
         
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        if 'cuda' in device.type:
-            from google.colab import drive
-            drive.mount('/content/drive',force_remount=False)
-            self.data_directory = '/content/drive/Othercomputers/My MacBook Pro/DRLOT/Data.nosync/SPY/stableBaselines/'
-        else:
-            self.data_directory = 'Data.nosync/SPY/stableBaselines/'
+        # if 'cuda' in device.type:
+        #     from google.colab import drive
+        #     drive.mount('/content/drive',force_remount=False)
+        #     self.data_directory = '/content/drive/Othercomputers/My MacBook Pro/DRLOT/Data.nosync/SPY/stableBaselines/'
+        # else:
+        #     self.data_directory = 'Data.nosync/SPY/stableBaselines/'
+        self.data_directory = '/content/drive/Othercomputers/My MacBook Pro/DRLOT/Data.nosync/SPY/stableBaselines/'
         
         self.closed = False
         
-        if 'cuda' in device.type:
-            self.minmax = MinMax3()
-        else:
-            self.minmax = MinMax2(self.data_directory,reset=False)
+        # if 'cuda' in device.type:
+        self.minmax = MinMax3()
+        # else:
+            # self.minmax = MinMax2(self.data_directory,reset=False)
 
         self.min_deposit = self.minmax.minimum[self.minmax.columns.index('deposit_mark')]
         self.max_deposit = self.minmax.maximum[self.minmax.columns.index('deposit_mark')]
