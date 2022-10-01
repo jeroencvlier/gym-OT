@@ -1,0 +1,9 @@
+setup.py
+gym_OT/__init__.py
+gym_OT.egg-info/PKG-INFO
+gym_OT.egg-info/SOURCES.txt
+gym_OT.egg-info/dependency_links.txt
+gym_OT.egg-info/requires.txt
+gym_OT.egg-info/top_level.txt
+gym_OT/envs/OTGym.py
+gym_OT/envs/__init__.py
