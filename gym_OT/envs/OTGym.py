@@ -70,8 +70,12 @@ class OTGym_v0(gym.Env):
         
     def _next_observation(self,):
         self.scaler_trade_record()
-        ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
-        self.obs = torch.concat((self.minmax.scale(self.dflocked[self.current_step-self.historicalWindow:self.current_step]),ts_t),dim=1)
+        
+        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy()
+        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
+        
+        # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
+        # self.obs = torch.concat((self.minmax.scale(self.dflocked[self.current_step-self.historicalWindow:self.current_step]),ts_t),dim=1)
         
     def _take_action(self,):
         self.reward = 0.0
@@ -178,8 +182,12 @@ class OTGym_v0(gym.Env):
         self.idx_list.remove(self.idx)
         
         self.scaler_trade_record()
-        ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
-        self.obs = torch.concat((self.minmax.scale(self.dflocked[0:self.historicalWindow]),ts_t),dim=1)
+        
+        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy()
+        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
+        
+        # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
+        # self.obs = torch.concat((self.minmax.scale(self.dflocked[0:self.historicalWindow]),ts_t),dim=1)
         
         self.done = [False for _ in range(self.dflocked.shape[0]-1)]+[True]
         self.max_steps = len(self.dflocked)
