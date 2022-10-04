@@ -60,7 +60,7 @@ class OTGym_v0(gym.Env):
         self.fileUsage = {x:1 for x in self.files}
         self.subFileUsage = {x:{} for x in self.files}
         self.width = pd.read_parquet(glob.glob(self.data_directory+'*')[0]).shape[-1] + len(self.newRecord)
-        self.observation_space = Box(low=-1, high=1, shape=(self.historicalWindow*self.width,))
+        self.observation_space = Box(low=-2, high=2, shape=(self.historicalWindow*self.width,))
         self.action_space = Discrete(2)   
 
         self.seed()
