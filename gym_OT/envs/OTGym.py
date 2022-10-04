@@ -60,7 +60,7 @@ class OTGym_v0(gym.Env):
         self.fileUsage = {x:1 for x in self.files}
         self.subFileUsage = {x:{} for x in self.files}
         self.width = pd.read_parquet(glob.glob(self.data_directory+'*')[0]).shape[-1] + len(self.newRecord)
-        self.observation_space = Box(low=-1, high=1, shape=(self.historicalWindow, self.width))
+        self.observation_space = Box(low=-1, high=1, shape=(1,self.historicalWindow*self.width))
         self.action_space = Discrete(2)   
 
         self.seed()
@@ -158,7 +158,7 @@ class OTGym_v0(gym.Env):
             self.trade_record['totalRealizedPL'] = 0.0
             self.trade_record['totalRealizedROI'] = 0.0
             
-        return self.obs, round(self.reward,4) , self.done[self.current_step], {}
+        return self.obs.flatten(), round(self.reward,4) , self.done[self.current_step], {}
 
     def reset(self):
         self.reward = 0.0
@@ -191,7 +191,7 @@ class OTGym_v0(gym.Env):
         
         self.done = [False for _ in range(self.dflocked.shape[0]-1)]+[True]
         self.max_steps = len(self.dflocked)
-        return self.obs 
+        return self.obs.flatten()
         
     def render(self, mode='human', close=False):
         if len(self.totalpl)==0: tplmean = np.mean(self.totalpl)
