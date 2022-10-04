@@ -71,7 +71,7 @@ class OTGym_v0(gym.Env):
     def _next_observation(self,):
         self.scaler_trade_record()
         
-        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy()
+        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy(dtype=np.float32)
         self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
         
         # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
@@ -183,7 +183,7 @@ class OTGym_v0(gym.Env):
         
         self.scaler_trade_record()
         
-        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy()
+        ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy(dtype=np.float32)
         self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
         
         # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
