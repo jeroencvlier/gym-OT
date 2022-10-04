@@ -72,7 +72,7 @@ class OTGym_v0(gym.Env):
         self.scaler_trade_record()
         
         ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy(dtype=np.float32)
-        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
+        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1).flatten()
         
         # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
         # self.obs = torch.concat((self.minmax.scale(self.dflocked[self.current_step-self.historicalWindow:self.current_step]),ts_t),dim=1)
@@ -184,14 +184,14 @@ class OTGym_v0(gym.Env):
         self.scaler_trade_record()
         
         ts_a = pd.DataFrame(self.trade_state_list_scaled).to_numpy(dtype=np.float32)
-        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1)
+        self.obs = np.concatenate((self.minmax.scale(self.dflocked[0:self.historicalWindow]), ts_a), axis=1).flatten()
         
         # ts_t = torch.Tensor([[np.float32(v) for k,v in ts.items()] for ts in self.trade_state_list_scaled])
         # self.obs = torch.concat((self.minmax.scale(self.dflocked[0:self.historicalWindow]),ts_t),dim=1)
         
         self.done = [False for _ in range(self.dflocked.shape[0]-1)]+[True]
         self.max_steps = len(self.dflocked)
-        return self.obs.flatten().flatten()
+        return self.obs
         
     def render(self, mode='human', close=False):
         if len(self.totalpl)==0: tplmean = np.mean(self.totalpl)
