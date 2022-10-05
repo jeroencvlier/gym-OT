@@ -7,6 +7,7 @@ import random
 from collections import deque
 import sys
 from utils.Scalers import *
+from typing import Optional
 
 class OTGym_v0(gym.Env):
     metadata = {'render.modes': ['human']}
