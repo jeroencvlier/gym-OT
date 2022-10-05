@@ -7,7 +7,6 @@ import random
 from collections import deque
 import sys
 from utils.Scalers import *
-from typing import Optional
 
 class OTGym_v0(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -161,8 +160,7 @@ class OTGym_v0(gym.Env):
             
         return self.obs.flatten().flatten(), round(self.reward,4) , self.done[self.current_step], {}
 
-    def reset(self,seed: Optional[int] = None,):
-        super().reset(seed=seed)
+    def reset(self):
         self.reward = 0.0
         self.trade_record = {key: value for key, value in self.newRecord.items()} 
         self.db4exp = 0
