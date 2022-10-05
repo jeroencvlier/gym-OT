@@ -160,7 +160,8 @@ class OTGym_v0(gym.Env):
             
         return self.obs.flatten().flatten(), round(self.reward,4) , self.done[self.current_step], {}
 
-    def reset(self):
+    def reset(self,seed: Optional[int] = None,):
+        super().reset(seed=seed)
         self.reward = 0.0
         self.trade_record = {key: value for key, value in self.newRecord.items()} 
         self.db4exp = 0
@@ -191,7 +192,7 @@ class OTGym_v0(gym.Env):
         
         self.done = [False for _ in range(self.dflocked.shape[0]-1)]+[True]
         self.max_steps = len(self.dflocked)
-        return self.obs
+        return self.obs,{}
         
     def render(self, mode='human', close=False):
         if len(self.totalpl)==0: tplmean = np.mean(self.totalpl)
