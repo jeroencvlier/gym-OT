@@ -161,7 +161,7 @@ class OTGym_v0(gym.Env):
             
         return self.obs.flatten().flatten(), round(self.reward,4) , self.done[self.current_step], {}
 
-    def reset(self,seed=1234,return_info=False,options=**kwargs):
+    def reset(self,seed=1234,return_info=False): #options=**kwargs
         self.reward = 0.0
         self.trade_record = {key: value for key, value in self.newRecord.items()} 
         self.db4exp = 0
